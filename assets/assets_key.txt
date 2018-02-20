@@ -1,0 +1,156 @@
+:sheet_dim:
+[
+[11, 5]
+]
+
+:tile_dim:
+[
+[16, 24]
+]
+
+:colorkey:
+[
+[0, 0, 0]
+]
+
+:creature sets:
+[
+[player: 0: 0]
+
+[large_crystal: 0: 9]
+
+[gnome: 3: 0]
+[gnome_zinger: 3: 1]
+[gnome_wiz: 3: 2]
+[gnome_thief: 3: 3]
+
+[flame: 3: 3]
+[eye: 3: 4]
+
+[djin: 3: 5]
+
+
+]
+
+:creature set tiles:
+[
+[a: 0: 0]
+[b: 0: 1]
+]
+
+
+:projectile sets:
+[
+[bolt: 0: 11]
+]
+
+:projectile set tiles:
+[
+[a: 0: 0]
+[b: 0: 1]
+]
+
+:effect sets:
+[
+[explode: 0: 12]
+]
+
+:effect set tiles:
+[
+[1: 0: 0]
+[2: 1: 0]
+[3: 2: 0]
+[4: 3: 0]
+[5: 4: 0]
+]
+
+:wall sets:
+[
+[dungeon: 1: 1]
+[cavern: 2: 1]
+]
+
+:wall set tiles:
+[
+[ver: 0: 0]
+[hor_a: 1: 0]
+[hor_b: 2: 0]
+]
+
+:enviro sets:
+[
+[main: 0: 1]
+]
+
+:enviro set tiles:
+[
+
+[blank: 4: 0]
+
+[crystal_large: 8: 0]
+[crystal_small: 9: 0]
+
+[brazier_off: 0: 0]
+[brazier_lit_ani_a: 1: 0]
+[brazier_lit_ani_b: 2: 0]
+
+[stone_1: 5: 0]
+[stone_2: 6: 0]
+[stone_3: 7: 0]
+
+[dungeon_ver_wall: 0: 1]
+[dungeon_hor_wall_1: 1: 1]
+[dungeon_hor_wall_2: 2: 1]
+
+[cavern_ver_wall: 0: 2]
+[cavern_hor_wall_1: 1: 2]
+[cavern_hor_wall_2: 2: 2]
+
+[door_closed: 3: 1]
+[door_opened: 3: 2]
+
+[stairs_down: 3: 0]
+
+[tuft_1: 4: 1]
+[tuft_2: 5: 1]
+[tuft_3: 6: 1]
+[tuft_4: 7: 1]
+
+[grass_1: 4: 2]
+[grass_2: 5: 2]
+
+[mushrooms: 8: 2]
+
+[stalagtite_1: 6: 2]
+[stalagtite_2: 7: 2]
+
+]
+
+:border sets:
+[
+[main: 11: 0]
+[ornate: 12: 0]
+]
+
+:border set tiles:
+[
+[top_left: 0: 0]
+[top_right: 1: 0]
+[bottom_left: 2: 0]
+[bottom_right: 3: 0]
+[top: 4: 0]
+[bottom: 4: 0]
+[left: 5: 0]
+[right: 5: 0]
+]
+
+:ui sets:
+[
+[ui: 13: 0]
+]
+
+:ui set tiles:
+[
+[full_heart: 0: 0]
+[empty_heart: 1: 0]
+]
