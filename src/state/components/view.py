@@ -1,5 +1,5 @@
 from state_component import StateComponent
-from ...data_types.vector import Vector
+from src.data_structures.vector import Vector
 
 
 class View(StateComponent):

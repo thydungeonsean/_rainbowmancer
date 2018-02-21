@@ -1,18 +1,3 @@
-:sheet_dim:
-[
-[11, 5]
-]
-
-:tile_dim:
-[
-[16, 24]
-]
-
-:colorkey:
-[
-[0, 0, 0]
-]
-
 :creature sets:
 [
 [player: 0: 0]
