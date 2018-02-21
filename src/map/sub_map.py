@@ -19,3 +19,7 @@ class SubMap(_Map):
     @property
     def terrain_map(self):
         return self.level_map.terrain_map
+
+    @property
+    def tile_map(self):
+        return self.level_map.tile_map

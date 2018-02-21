@@ -12,4 +12,4 @@ BRAZIER_ = 58
 
 passable_terrain = {FLOOR_, DOOR_, CRYSTAL_, SMALL_CRYSTAL_, EXIT_DOOR_}
 wall_terrains = {WALL_, STONE_WALL_}
-vertical_wall_markers = {WALL_, STONE_WALL_, DOOR_}
+vertical_wall_markers = {WALL_, STONE_WALL_, DOOR_, EXIT_DOOR_}

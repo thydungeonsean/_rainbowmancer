@@ -4,9 +4,11 @@ from src.enum.terrain import *
 
 class TerrainMap(SubMap):
 
-    def __init__(self, w, h, level_map=None):
+    def __init__(self, w, h, map_seed, level_map=None):
 
         SubMap.__init__(self, w, h, level_map)
+        self.map_seed = map_seed
+
         self.secret = {}
         self.main_zone = {}
         self.exit = None
@@ -20,7 +22,8 @@ class TerrainMap(SubMap):
         return filter(lambda x: self.get_tile(x) == key, self.all_points)
 
     def set_exit(self, point):
-        pass
+        self.set_tile(point, EXIT_DOOR_)
+        self.exit = point
 
     def set_entrance(self, point):
-        pass
+        self.entrance = point

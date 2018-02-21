@@ -233,7 +233,7 @@ class CaveMapGen(object):
         too_small = []
 
         for z, size in zone_sizes:
-            if size < MapGen.ZONE_SIZE_THRESHOLD:
+            if size < CaveMapGen.ZONE_SIZE_THRESHOLD:
                 too_small.append(z)
 
         for zone in too_small:
@@ -256,8 +256,8 @@ class CaveMapGen(object):
             if len(zone_connectors) == 0:
                 cls.dig_tunnel(t_map, point_zones, zone_lists, zone_id, largest)
             else:  # we either carve out a random connector to join zones or we leave it as a secret zone
-                if len(zone_lists[zone_id]) < MapGen.SECRET_CAVE_THRESHOLD \
-                        and randint(1, 100) <= MapGen.SECRET_CAVE_CHANCE:
+                if len(zone_lists[zone_id]) < CaveMapGen.SECRET_CAVE_THRESHOLD \
+                        and randint(1, 100) <= CaveMapGen.SECRET_CAVE_CHANCE:
                     secret_zones.append(zone_id)
                 else:
 
@@ -576,7 +576,7 @@ class CaveMapGen(object):
         floor = list(t_map.get_all(FLOOR_))
         shuffle(floor)
 
-        number = int(len(floor) * MapGen.STALAGTITE)
+        number = int(len(floor) * CaveMapGen.STALAGTITE)
         placed = 0
 
         for point in floor:
@@ -594,7 +594,7 @@ class CaveMapGen(object):
         floor = list(t_map.get_all(FLOOR_))
         shuffle(floor)
 
-        number = int(len(floor) * MapGen.BRAZIER)
+        number = int(len(floor) * CaveMapGen.BRAZIER)
         placed = 0
 
         for point in floor:
