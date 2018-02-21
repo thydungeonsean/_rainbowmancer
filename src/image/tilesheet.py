@@ -12,7 +12,7 @@ class TileSheet(object):
         if cls.main_tilesheet is None:
             cls.main_tilesheet = cls('tilesheet')
 
-        return cls.main_tilesheet
+        return cls.main_tilesheet.sheet
 
     @classmethod
     def get_icon_tilesheet(cls):
@@ -20,7 +20,7 @@ class TileSheet(object):
         if cls.icon_tilesheet is None:
             cls.icon_tilesheet = cls('icons')
 
-        return cls.icon_tilesheet
+        return cls.icon_tilesheet.sheet
 
     def __init__(self, sheet_id):
 
