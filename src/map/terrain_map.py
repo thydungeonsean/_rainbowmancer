@@ -9,11 +9,12 @@ class TerrainMap(SubMap):
         SubMap.__init__(self, w, h, level_map)
         self.map_seed = map_seed
 
-        self.secret = {}
-        self.main_zone = {}
+        self.secret = set()
+        self.main_zone = set()
         self.exit = None
         self.entrance = None
 
+    @staticmethod
     def start_value():
         return WALL_
 

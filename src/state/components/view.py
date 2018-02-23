@@ -4,21 +4,39 @@ from src.data_structures.vector import Vector
 
 class View(StateComponent):
 
-    def __init__(self, state, display_w, display_h, map_w, map_h, start_pos=Vector(0, 0)):
+    VIEW_W = 27
+    VIEW_H = 15
+
+    OFFSET_X = VIEW_W / 2
+    OFFSET_Y = VIEW_H / 2
+
+    def __init__(self, state, map_w, map_h, start_pos=Vector(0, 0)):
 
         StateComponent.__init__(self, state)
         self.coord = start_pos
-        self.display_w = display_w
-        self.display_h = display_h
+        self.display_w = View.VIEW_W
+        self.display_h = View.VIEW_H
 
-        self.min_x = -map_w + self.display_w
-        self.min_y = -map_h + self.display_h
-        self.max_x = 0
-        self.max_y = 0
+        self.min_x = 0
+        self.min_y = 0
+        self.max_x = map_w - self.display_w
+        self.max_y = map_h - self.display_h
 
-    def move_view(self, vector):
+        self.offset_vector = Vector(-View.OFFSET_X, -View.OFFSET_Y)
 
-        self.coord.add(vector)
+    def initialize(self):
+
+        self.set_view_position()
+
+    def get_offset_vector(self):
+
+        self.offset_vector.set_position(-View.OFFSET_X, -View.OFFSET_Y)
+        self.offset_vector.add(self.state.player.coord)
+
+    def set_view_position(self):
+
+        self.get_offset_vector()
+        self.coord.set_position(self.offset_vector.x, self.offset_vector.y)
         self.limit_coord()
 
     def limit_coord(self):

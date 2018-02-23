@@ -1,14 +1,20 @@
 
-SCALE = 1
+SCALE = 2
 
-SCREEN_W = 960
-SCREEN_H = 600
+def scale(i):
+    return int(i * SCALE)
 
-SCALE_SCREEN_W = SCREEN_W * SCALE
-SCALE_SCREEN_H = SCREEN_H * SCALE
+SCREEN_W = 640
+SCREEN_H = 360
+
+SCALE_SCREEN_W = scale(SCREEN_W)
+SCALE_SCREEN_H = scale(SCREEN_H)
 
 TILE_W = 16
 TILE_H = 24
+
+SCALE_TILE_W = scale(TILE_W)
+SCALE_TILE_H = scale(TILE_H)
 
 FPS = 60
 

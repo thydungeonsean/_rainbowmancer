@@ -9,7 +9,7 @@ class Image(object):
 
         self.surface = None
         self.coord = Vector(0, 0)
-        self.color_id = WHITE
+        self.color_id = START_COLOR
 
     def position(self, (x, y)):
 

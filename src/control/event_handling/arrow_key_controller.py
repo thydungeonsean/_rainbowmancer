@@ -11,6 +11,8 @@ class ArrowKeyController(object):
     DIRECTIONS = {UP, RIGHT, DOWN, LEFT}
     STR_DIRECTIONS = {'up': UP, 'right': RIGHT, 'down': DOWN, 'left': LEFT}
 
+    VECTORS = {UP: (0, -1), DOWN: (0, 1), LEFT: (-1, 0), RIGHT: (1, 0)}
+
     def __init__(self):
 
         cls = ArrowKeyController
@@ -21,6 +23,9 @@ class ArrowKeyController(object):
         cls = ArrowKeyController
         if k_id in cls.DIRECTIONS:
             self.pressed[k_id] = True
+            vx, vy = cls.VECTORS[k_id]
+            self.vector.set_position(vx, vy)
+            self.on_press()
         # elif k_id.lower() in cls.STR_DIRECTIONS:
         #     self.pressed[cls.STR_DIRECTIONS[k_id]] = True
         else:
@@ -30,6 +35,8 @@ class ArrowKeyController(object):
         cls = ArrowKeyController
         if k_id in cls.DIRECTIONS:
             self.pressed[k_id] = False
+            self.vector.set_position(0, 0)
+            self.on_release()
         # elif k_id.lower() in cls.STR_DIRECTIONS:
         #     self.pressed[cls.STR_DIRECTIONS[k_id]] = False
         else:
@@ -66,3 +73,9 @@ class ArrowKeyController(object):
     def release_right(self):
         cls = ArrowKeyController
         self.release(cls.RIGHT)
+
+    def on_press(self):
+        pass
+
+    def on_release(self):
+        pass

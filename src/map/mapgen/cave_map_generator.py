@@ -238,7 +238,7 @@ class CaveMapGen(object):
 
         for zone in too_small:
             for point in zone_lists[zone]:
-                t_map.set_tile(1, point)
+                t_map.set_tile(point, WALL_)
                 del point_zones[point]
             del zone_lists[zone]
 

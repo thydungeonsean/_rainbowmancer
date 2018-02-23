@@ -6,10 +6,12 @@ from tile_key import *
 
 class TileImage(Image):
 
-    def __init__(self, tile_id):
+    def __init__(self, tile_id, animated_frame=False):
 
         Image.__init__(self)
+
         self.tile_id = tile_id
+        self.animated_frame = animated_frame
 
         self.load_tile_image()
 
@@ -22,8 +24,12 @@ class TileImage(Image):
 
         tilesheet = TileSheet.get_tilesheet()
         tx, ty = tile_key[self.tile_id]
+        if self.animated_frame:
+            ty += 1
 
         image.blit(tilesheet, (0, 0), (tx * w, ty * h, w, h))
+
+        image = pygame.transform.scale(image, (SCALE_TILE_W, SCALE_TILE_H))
         image = image.convert()
 
         self.surface = image

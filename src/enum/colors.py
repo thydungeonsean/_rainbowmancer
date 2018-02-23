@@ -3,3 +3,12 @@ WHITE = (255, 255, 255)
 BLACK = (56, 56, 66)
 
 SHROUD = (0, 0, 0)
+
+# game colors
+
+GREY_1 = (89, 89, 89)
+GREY_2 = (133, 133, 133)
+GREY_3 = (199, 199, 199)
+GREY_4 = (240, 240, 240)
+
+START_COLOR = GREY_4

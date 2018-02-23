@@ -1,4 +1,5 @@
 import pygame
+from src.enum.colors import *
 
 
 class TileSheet(object):
@@ -25,3 +26,7 @@ class TileSheet(object):
     def __init__(self, sheet_id):
 
         self.sheet = pygame.image.load('assets/' + sheet_id + '.png').convert()
+
+        pix_array = pygame.PixelArray(self.sheet)
+        pix_array.replace(SHROUD, BLACK)
+        pix_array.replace(WHITE, START_COLOR)
