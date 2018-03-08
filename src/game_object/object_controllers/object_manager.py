@@ -9,6 +9,10 @@ class ObjectManager(object):
 
         self.objects = []
 
+    def run(self):
+        for obj in self.objects:
+            obj.run()
+
     def draw(self, surface):
 
         for obj in self.objects:
@@ -25,3 +29,6 @@ class ObjectManager(object):
         obj.set_position()
         self.objects.append(obj)
 
+    def point_is_obstructed(self, point):
+        # TODO returns True if there is one or more objects on point that blocks sight
+        return False

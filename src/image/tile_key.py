@@ -29,6 +29,8 @@ tile_key = {
 
     FLOOR: (5, 0),
 
+    BLANK: (3, 0),
+
     STONE_1: (6, 0),
     STONE_2: (7, 0),
     STONE_3: (8, 0),

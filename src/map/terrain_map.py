@@ -4,7 +4,7 @@ from src.enum.terrain import *
 
 class TerrainMap(SubMap):
 
-    def __init__(self, w, h, map_seed, level_map=None):
+    def __init__(self, w, h, map_seed, level_map):
 
         SubMap.__init__(self, w, h, level_map)
         self.map_seed = map_seed

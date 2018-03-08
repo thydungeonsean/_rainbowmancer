@@ -53,6 +53,6 @@ class PlayerController(ArrowKeyController):
 
     def move_player(self, vector):
 
-        self.player.move(vector)
+        self.player.try_move(vector)
         self.state.view.set_view_position()
         self.player.set_position()

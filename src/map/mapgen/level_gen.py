@@ -1,10 +1,13 @@
-from cave_map_generator import MapGen
-from src.map.level import Level
+from cave_map_generator import CaveMapGen
+from src.map.level_map import LevelMap
 from src.map.tile_map import TileMap
-from src.map.master_color_map import MasterColorMap
+from src.map.color_map import ColorMap
+from src.map.fov_map import FOVMap
 from src.image.map_image import MapImage
 
 from random import seed, choice, sample
+
+from src.enum.hues import *
 
 
 class LevelGen(object):
@@ -12,35 +15,40 @@ class LevelGen(object):
     map_seed = None
 
     @classmethod
-    def generate_level(cls, game_state, map_seed=None):
+    def generate_level(cls, game_state, map_seed):
+        # TODO - take in a depth argument etc and use a template for that depth to choose monsters, items, etc.
 
-        level = Level(1, game_state, map_seed=map_seed)
+        level = LevelMap(game_state, map_seed)
         cls.map_seed = level.map_seed
-        terrain = MapGen.generate_terrain_map_cave(45, 25, map_seed=cls.map_seed)
 
-        cls.initialize_level(level, terrain)
+        terrain_map = CaveMapGen.generate_cave_terrain_map(45, 25, cls.map_seed, level)
 
-        cls.initialize_color_sources(level)
-        cls.create_door_objects(level)
+        cls.initialize_level(level, terrain_map)
 
+        # cls.initialize_color_sources(level)
+        # cls.create_door_objects(level)
+        #
         cls.initialize_fov(level)
 
-        cls.spawn_monsters(level, 12)
+        # cls.spawn_monsters(level, 12)
 
-        level.set_map_image(MapImage(level))
+        level.map_image = MapImage(level)
 
         return level
 
     @classmethod
-    def initialize_level(cls, level, terrain):
+    def initialize_level(cls, level, terrain_map):
 
-        level.set_terrain_map(terrain)
+        level.terrain_map = terrain_map
 
-        level.tile_map = TileMap(level.terrain_map)
+        level.tile_map = TileMap(level)
         level.tile_map.initialize()
 
-        level.color_map = MasterColorMap(level)
-        level.color_source_generator.set_color_map(level.color_map)
+        level.color_map = ColorMap(level)
+
+        level.color_map.add_color_source(RED_HUE, 5, (10, 10))
+        level.color_map.compute_color_map()
+        # level.color_source_generator.set_color_map(level.color_map)
 
     @classmethod
     def initialize_color_sources(cls, level):
@@ -72,6 +80,7 @@ class LevelGen(object):
     @classmethod
     def initialize_fov(cls, level):
 
+        level.fov_map = FOVMap(level)
         level.fov_map.init_fov_map()
 
     @classmethod

@@ -4,6 +4,8 @@ import pygame
 from src.enum.colors import *
 from src.image.image_cache import ImageCache
 
+from src.enum.hues import *
+
 
 class MapImage(object):
 
@@ -16,6 +18,7 @@ class MapImage(object):
 
         self.level_map = level_map
         self.tile_map = self.level_map.tile_map
+        self.color_map = self.level_map.color_map
         self.state = self.level_map.game_state
         self.w = self.level_map.w
         self.h = self.level_map.h
@@ -32,7 +35,6 @@ class MapImage(object):
         vx, vy = self.state.view.coord.position
         x = -vx * SCALE_TILE_W
         y = -vy * SCALE_TILE_H
-        # print self.state.view.coord.position
         self.position((x, y))
 
     def position(self, (x, y)):
@@ -54,11 +56,25 @@ class MapImage(object):
 
     def draw_tile(self, (x, y), image):
 
-        tile_id = self.tile_map.get_tile((x, y))
-        tile_image = ImageCache.get_tile_image(tile_id)
+        if self.level_map.fov_map.is_explored((x, y)):
 
-        tile_image.position((x * SCALE_TILE_W, y * SCALE_TILE_H))
-        tile_image.draw(image)
+            tile_id = self.tile_map.get_tile((x, y))
+            tile_image = ImageCache.get_tile_image(tile_id)
+
+            tile_image.position((x * SCALE_TILE_W, y * SCALE_TILE_H))
+
+            color = self.color_map.get_tile_color((x, y))
+
+            tile_image.change_color(color)
+
+            tile_image.draw(image)
+
+    def redraw_tiles(self, tiles):
+
+        image = self.images[(MapImage.A,)]
+
+        for tile in tiles:
+            self.draw_tile(tile, image)
 
 
 

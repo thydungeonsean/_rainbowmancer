@@ -32,10 +32,8 @@ class CaveMapGen(object):
         cls.MAPFAILED = False
 
     @classmethod
-    def generate_cave_terrain_map(cls, w, h, map_seed=None):
+    def generate_cave_terrain_map(cls, w, h, map_seed, level):
 
-        if map_seed is None:
-            map_seed = randint(0, 999999)
         seed(map_seed)
 
         # print map_seed
@@ -56,7 +54,7 @@ class CaveMapGen(object):
 
             cave_map = cls.clean_cave_map(cave_map, cw, ch)
 
-            terrain_map = cls.create_terrain_map(cave_map, w, h, map_seed)
+            terrain_map = cls.create_terrain_map(level, cave_map, w, h, map_seed)
 
             cls.get_cave_zones(terrain_map)
 
@@ -154,9 +152,9 @@ class CaveMapGen(object):
     ######################################################################
 
     @classmethod
-    def create_terrain_map(cls, cave_map, w, h, map_seed):
+    def create_terrain_map(cls, level, cave_map, w, h, map_seed):
 
-        t = TerrainMap(w, h, map_seed)
+        t = TerrainMap(w, h, map_seed, level)
         for px, py in t.all_points:
             try:
                 if cave_map[px][py]:

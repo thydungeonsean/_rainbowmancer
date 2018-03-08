@@ -24,6 +24,12 @@ class View(StateComponent):
 
         self.offset_vector = Vector(-View.OFFSET_X, -View.OFFSET_Y)
 
+    def set_new_map(self, map_w, map_h):
+        self.max_x = map_w - self.display_w
+        self.max_y = map_h - self.display_h
+
+        self.initialize()
+
     def initialize(self):
 
         self.set_view_position()

@@ -34,6 +34,10 @@ class Vector(object):
 
     @property
     def int_position(self):
+        return int(self.x), int(self.y)
+
+    @property
+    def int_position(self):
         return int(round(self.x)), int(round(self.y))
 
     def enforce_type(self, x, y):
@@ -77,3 +81,10 @@ class Vector(object):
         def blank():
             pass
         self.scale = blank
+
+    def peek_add(self, vec):
+        # takes in a vector, returns a tuple of this vectors position added to inputs position
+        x, y = self.int_position
+        vx, vy = vec.int_position
+
+        return x + vx, y + vy

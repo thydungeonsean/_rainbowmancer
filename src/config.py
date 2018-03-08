@@ -1,5 +1,5 @@
 
-SCALE = 2
+SCALE = 3
 
 def scale(i):
     return int(i * SCALE)
@@ -18,4 +18,4 @@ SCALE_TILE_H = scale(TILE_H)
 
 FPS = 60
 
-FULLSCREEN_ON = False
+FULLSCREEN_ON = True

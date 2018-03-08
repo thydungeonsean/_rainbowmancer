@@ -20,7 +20,6 @@ class Image(object):
         surface.blit(self.surface, self.coord.position)
 
     def change_color(self, new_color):
-
         pixel_array = pygame.PixelArray(self.surface)
         pixel_array.replace(self.color_id, new_color)
         self.color_id = new_color

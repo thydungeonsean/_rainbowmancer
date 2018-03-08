@@ -2,6 +2,7 @@ from image import Image, pygame
 from src.config import *
 from tilesheet import TileSheet
 from tile_key import *
+from src.enum.colors import *
 
 
 class TileImage(Image):
@@ -33,3 +34,12 @@ class TileImage(Image):
         image = image.convert()
 
         self.surface = image
+
+        self.modify_wall()
+
+    def modify_wall(self):
+
+        if self.tile_id in WALLS:
+
+            pix_array = pygame.PixelArray(self.surface)
+            pix_array.replace(BLACK, LT_BLACK)

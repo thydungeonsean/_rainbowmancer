@@ -28,5 +28,5 @@ class TileSheet(object):
         self.sheet = pygame.image.load('assets/' + sheet_id + '.png').convert()
 
         pix_array = pygame.PixelArray(self.sheet)
-        pix_array.replace(SHROUD, BLACK)
+        pix_array.replace(PURE_BLACK, BLACK)
         pix_array.replace(WHITE, START_COLOR)
