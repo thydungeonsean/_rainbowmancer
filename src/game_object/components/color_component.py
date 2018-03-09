@@ -1,5 +1,6 @@
 from game_object_component import GameObjectComponent
 import src.enum.hues as hues
+from src.enum.hues import *
 
 
 REFLECT = 0
@@ -49,7 +50,13 @@ class ColorComponent(GameObjectComponent):
         self.owner.image_component.change_color(self.color_id)
 
     def update_reflect(self):
-        self.color_id = self.color_map.get_tile_color(self.owner.coord.int_position)
+        pos = self.owner.coord.int_position
+        if self.color_map.get_tile(pos) == DARK_HUE:
+            self.color_id = GREY_2
+        elif self.color_map.get_tile(pos) == WHITE_HUE:
+            self.color_id = GREY_5
+        else:
+            self.color_id = self.color_map.get_tile_color(pos)
 
     def update_generate(self):
         self.color_id = hues.hue_table[self.hue_id][hues.max_str]

@@ -6,6 +6,11 @@ tile_key = {
 
     # player
     RAINBOWMANCER: (0, 0),
+    CYAN_KNIGHT: (1, 14),
+    GEBBETH: (0, 14),
+    YELLOWMANCER: (4, 14),
+    CRIMLOCK: (5, 14),
+    DWARF: (7, 14),
 
     # tiles
     BRAZIER_LIT: (1, 0),
@@ -49,5 +54,43 @@ tile_key = {
 
     # foes
     GNOME: (0, 3),
+    GNOME_ENCHANTER: (1, 3),
+    GNOME_MAGI: (2, 3),
+    GNOME_TRICKSTER: (3, 3),
+
+    FLAME: (4, 3),
+    ORB: (5, 3),
+    OOZE: (6, 3),
+    DJIN: (7, 3),
+    FLAMING_UNDEAD: (8, 3),
+
+    NAGA: (0, 5),
+    NAGA_ARCHER: (1, 5),
+    NAGA_MAGE: (2, 5),
+
+    KOBOLD: (3, 5),
+    KOBOLD_ARCHER: (4, 5),
+    KOBOLD_CHIEF: (5, 5),
+
+    CENTAUR: (0, 7),
+    CENTAUR_ARCHER: (1, 7),
+    CENTAUR_CHIEF: (2, 7),
+
+    FAE: (3, 7),
+    FAE_WARRIOR: (4, 7),
+    FAE_ENCHANTER: (5, 7),
+
+    SKELETON: (0, 9),
+    SKELETON_ARCHER: (1, 9),
+    LICH: (2, 9),
+
+    DARK_ELF: (3, 9),
+    SPIDER: (4, 9),
+    DARK_WIZARD: (5, 9),
+
+    # summons
+
+    VINE_WALL: (7, 9),
+    TREANT: (8, 9),
 
 }

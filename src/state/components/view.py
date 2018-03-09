@@ -10,7 +10,7 @@ class View(StateComponent):
     OFFSET_X = VIEW_W / 2
     OFFSET_Y = VIEW_H / 2
 
-    def __init__(self, state, map_w, map_h, start_pos=Vector(0, 0)):
+    def __init__(self, state, start_pos=Vector(0, 0)):
 
         StateComponent.__init__(self, state)
         self.coord = start_pos
@@ -19,16 +19,14 @@ class View(StateComponent):
 
         self.min_x = 0
         self.min_y = 0
-        self.max_x = map_w - self.display_w
-        self.max_y = map_h - self.display_h
+        self.max_x = 0
+        self.max_y = 0
 
         self.offset_vector = Vector(-View.OFFSET_X, -View.OFFSET_Y)
 
-    def set_new_map(self, map_w, map_h):
-        self.max_x = map_w - self.display_w
-        self.max_y = map_h - self.display_h
-
-        self.initialize()
+    def set_new_map(self, level):
+        self.max_x = level.w - self.display_w
+        self.max_y = level.h - self.display_h
 
     def initialize(self):
 
@@ -44,6 +42,9 @@ class View(StateComponent):
         self.get_offset_vector()
         self.coord.set_position(self.offset_vector.x, self.offset_vector.y)
         self.limit_coord()
+
+        # changed view position, so update display coords of all actors
+        self.state.level.update_object_positions()
 
     def limit_coord(self):
 

@@ -1,7 +1,6 @@
 from sub_map import SubMap
 from color_components.hue_map import HueMap
 from src.enum.hues import *
-from color_components.color_source import ColorSource
 
 
 class ColorMap(SubMap):
@@ -68,10 +67,10 @@ class ColorMap(SubMap):
         self.needs_recompute = False
 
     # color source managing
-    def add_color_source(self, hue, str, point):
+    def add_color_source(self, src):
 
-        source = ColorSource(self, hue, str, point)
-        self.sources.append(source)
+        src.color_map = self
+        self.sources.append(src)
 
         self.request_recompute()
 

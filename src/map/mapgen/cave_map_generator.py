@@ -32,11 +32,9 @@ class CaveMapGen(object):
         cls.MAPFAILED = False
 
     @classmethod
-    def generate_cave_terrain_map(cls, w, h, map_seed, level):
+    def generate_cave_terrain_map(cls, w, h, number_of_crystals, map_seed, level):
 
         seed(map_seed)
-
-        # print map_seed
 
         cw = w - 2
         ch = h - 2
@@ -65,7 +63,7 @@ class CaveMapGen(object):
                 continue  # trash this map
 
             cls.set_entrance(terrain_map)
-            cls.set_crystals(terrain_map, 10)
+            cls.set_crystals(terrain_map, number_of_crystals)
 
             cls.set_braziers(terrain_map)
             cls.set_stalagtites(terrain_map)
@@ -459,7 +457,7 @@ class CaveMapGen(object):
     @classmethod
     def set_entrance(cls, t_map):
 
-        ex = t_map.exit
+        ex = t_map.exit_stair
 
         d_map = cls.get_dijkstra(t_map, [ex])
 
@@ -617,6 +615,6 @@ class CaveMapGen(object):
     def check_map_connected(cls, t_map):
 
         d_map, exit = cls.get_path(t_map, [t_map.entrance], lambda e: t_map.get_tile(e) in passable_terrain,
-                                   lambda x: x == t_map.exit)
+                                   lambda x: x == t_map.exit_stair)
 
         return exit is not None

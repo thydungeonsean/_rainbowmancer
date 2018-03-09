@@ -11,7 +11,7 @@ class TerrainMap(SubMap):
 
         self.secret = set()
         self.main_zone = set()
-        self.exit = None
+        self.exit_stair = None
         self.entrance = None
 
     @staticmethod
@@ -24,7 +24,11 @@ class TerrainMap(SubMap):
 
     def set_exit(self, point):
         self.set_tile(point, EXIT_DOOR_)
-        self.exit = point
+        self.exit_stair = point
 
     def set_entrance(self, point):
         self.entrance = point
+
+    def point_is_blocked(self, (x, y)):
+
+        return self.get_tile((x, y)) in blocking_terrains

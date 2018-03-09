@@ -4,7 +4,7 @@ from src.config import *
 
 class GameObject(object):
 
-    def __init__(self, level_map, (x, y), block_sight, blocks):
+    def __init__(self, level_map, (x, y), blocks_sight, blocks):
 
         self.level_map = level_map
         self.game_state = level_map.game_state
@@ -15,8 +15,9 @@ class GameObject(object):
         self.image_component = None
         self.color_component = None
         self.stat_component = None
+        self.color_source = None
 
-        self.block_sight = block_sight
+        self.blocks_sight = blocks_sight
         self.blocks = blocks
 
     def run(self):
@@ -40,6 +41,8 @@ class GameObject(object):
             self.image_component.position((x * SCALE_TILE_W, y * SCALE_TILE_H))
         if self.color_component:
             self.color_component.request_update()
+        if self.color_source:
+            self.color_source.move()
 
     def get_relative_coord(self, (x, y)):
         vx, vy = self.view.coord.position
@@ -48,3 +51,8 @@ class GameObject(object):
     def on_bump(self):
         # called when an actor bumps this game object
         pass
+
+    def request_update(self):
+
+        if self.color_component:
+            self.color_component.request_update()

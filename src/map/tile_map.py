@@ -80,3 +80,8 @@ class TileMap(SubMap):
 
     def set_exit_tile(self, point):
         self.set_tile(point, EXIT_DOOR)
+
+    def update_tile(self, point, value):
+
+        self.set_tile(point, value)
+        self.level_map.redraw_manager.set_redraw_tiles({point})

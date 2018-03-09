@@ -32,8 +32,10 @@ class Actor(GameObject):
 
     def can_move(self, vector):
 
-        terrain_block = False
-        object_block = False
+        move_point = self.coord.peek_add(vector)
+
+        terrain_block = self.level_map.terrain_map.point_is_blocked(move_point)
+        object_block = self.level_map.object_manager.point_is_blocked(move_point)
 
         return not terrain_block and not object_block
 
@@ -49,13 +51,12 @@ class Actor(GameObject):
     def bump(self, vector):
 
         target_coord = self.coord.peek_add(vector)
-        # check for terrain or opponent interaction
-        # bumped_target = self.get_bumped()
-        # target.on_bump
+        bumped_target = self.level_map.object_manager.get_objects_at_point(target_coord)
+        map(lambda x: x.on_bump(), bumped_target)
 
         used_turn = True
         if used_turn:
-            # update turn component
+            # TODO update turn component
             pass
         pass
 

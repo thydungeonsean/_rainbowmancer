@@ -1,4 +1,5 @@
 from game_object import GameObject
+from src.enum.tiles import DOOR_OPEN
 
 
 class Door(GameObject):
@@ -21,6 +22,9 @@ class Door(GameObject):
 
         self.state = Door.OPEN
         self.blocks = False
-        self.block_sight = False
+        self.blocks_sight = False
+        self.level_map.fov_map.update_point(self.coord.int_position)
 
         # TODO change tile of tile_map
+        self.level_map.tile_map.update_tile(self.coord.int_position, DOOR_OPEN)
+        self.level_map.fov_map.recompute_fov()

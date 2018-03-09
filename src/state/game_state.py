@@ -39,25 +39,25 @@ class GameState(AbstractState):
 
     def initialize(self):
 
-        self.screen.fill((200, 100, 0))
+        self.view = View(self)
 
-        self.level = LevelGen.generate_level(self, 1)
+        self.level = LevelGen.generate_level(self, 1, map_seed=None)
 
-        self.view = View(self, self.level.w, self.level.h)
+        self.view.set_new_map(self.level)
         self.view_port = ViewPort(self)
 
-        self.player = Player(self.level, self.level.entrance)
-        self.view.initialize()
+        self.player = Player(self.level)
 
         self.level.initialize(self.player)
+        self.view.initialize()
 
-    def new_level(self, l):
+    def new_level(self, depth, map_seed):
 
-        self.level = LevelGen.generate_level(self, 1001)
+        self.level = LevelGen.generate_level(self, depth, map_seed)
 
-        self.view.set_new_map(self.level.w, self.level.h)
+        self.view.set_new_map(self.level)
 
-        self.player.position(self.level.entrance)
+        self.level.initialize(self.player)
         self.view.initialize()
 
     def initialize_ui(self):

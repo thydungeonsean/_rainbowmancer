@@ -1,6 +1,7 @@
 from src.control.event_handling.input_handler import InputHandler
 from src.control.event_handling.event_listener import EventListener
 from src.enum.engine import *
+from src.config import DEVELOPER_MODE
 
 
 class DungeonInputHandler(InputHandler):
@@ -27,7 +28,20 @@ class DungeonInputHandler(InputHandler):
         alt_right = EventListener(K_d, key_down=state.player_controller.press_right,
                                   key_up=state.player_controller.release_right)
 
-        InputHandler.__init__(self, state, exit_func, up, down, left, right, alt_up, alt_down, alt_left, alt_right)
+        listeners = [exit_func, up, down, left, right, alt_up, alt_down, alt_left, alt_right]
+
+        # dev tools
+        if DEVELOPER_MODE:
+
+            show_seed = EventListener(K_z, key_down=self.print_seed)
+            listeners.extend([show_seed])
+
+        InputHandler.__init__(self, state, *listeners)
 
     def on_mouse_motion(self):
         pass
+
+    def print_seed(self):
+        print 'depth: ' + str(self.state.level.depth)
+        print 'seed: ' + str(self.state.level.map_seed)
+        print self.state.level.player.coord.int_position

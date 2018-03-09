@@ -8,11 +8,11 @@ class ImageComponent(GameObjectComponent):
     A = 0
     B = 1
 
-    def __init__(self, owner, image_id):
+    def __init__(self, owner, image_id, animated=True):
 
         GameObjectComponent.__init__(self, owner)
         self.image_id = image_id
-        self.images = self.load_images()
+        self.images = self.load_images(animated)
 
     @property
     def frame(self):
@@ -22,11 +22,11 @@ class ImageComponent(GameObjectComponent):
     def color_id(self):
         return self.images[0].color_id
 
-    def load_images(self):
+    def load_images(self, animated):
 
         images = {
             ImageComponent.A: TileImage(self.image_id),
-            ImageComponent.B: TileImage(self.image_id, animated_frame=True)
+            ImageComponent.B: TileImage(self.image_id, animated_frame=animated)
         }
 
         return images

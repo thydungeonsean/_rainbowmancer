@@ -7,34 +7,59 @@ from src.image.map_image import MapImage
 
 from random import seed, choice, sample
 
+from src.enum.terrain import *
 from src.enum.hues import *
+
+from src.game_object.door import Door
+from src.game_object.crystal import Crystal
+from src.game_object.brazier import Brazier
+from src.game_object.exit import Exit
+
+from monster_generator import MonsterGenerator
 
 
 class LevelGen(object):
 
+    # min width, 30 for map scrolling
+
     map_seed = None
 
     @classmethod
-    def generate_level(cls, game_state, map_seed):
-        # TODO - take in a depth argument etc and use a template for that depth to choose monsters, items, etc.
+    def generate_level(cls, game_state, depth, map_seed=None):
 
-        level = LevelMap(game_state, map_seed)
+        width = 40
+        height = 25
+
+        level = LevelMap(game_state, depth, map_seed)
         cls.map_seed = level.map_seed
 
-        terrain_map = CaveMapGen.generate_cave_terrain_map(45, 25, cls.map_seed, level)
+        number_of_crystals = 10
+        number_of_monsters = 12
+
+        terrain_map = CaveMapGen.generate_cave_terrain_map(width, height, number_of_crystals, map_seed, level)
 
         cls.initialize_level(level, terrain_map)
-
-        # cls.initialize_color_sources(level)
-        # cls.create_door_objects(level)
-        #
         cls.initialize_fov(level)
 
-        # cls.spawn_monsters(level, 12)
+        # adding game objects to the level
+        cls.create_doors(level)
+        cls.create_crystals(level)
+        cls.create_braziers(level)
+        cls.create_exit(level)
+
+        cls.initialize_color(level)
+
+        cls.spawn_monsters(level, number_of_monsters)
 
         level.map_image = MapImage(level)
 
         return level
+
+    @classmethod
+    def initialize_fov(cls, level):
+
+        level.fov_map = FOVMap(level)
+        level.fov_map.init_fov_map()
 
     @classmethod
     def initialize_level(cls, level, terrain_map):
@@ -46,42 +71,54 @@ class LevelGen(object):
 
         level.color_map = ColorMap(level)
 
-        level.color_map.add_color_source(RED_HUE, 5, (10, 10))
         level.color_map.compute_color_map()
-        # level.color_source_generator.set_color_map(level.color_map)
 
     @classmethod
-    def initialize_color_sources(cls, level):
-
-        seed(cls.map_seed)
-
-        crystals = filter(lambda x: level.terrain_map.get_tile_id(x) == 'large_crystal', level.terrain_map.all_points)
-
-        for point in crystals:
-            color = choice(('red', 'green', 'blue'))
-            level.map_object_generator.add_crystal(point, color)
-            #level.color_source_generator.get_color_source(point, color, 5)
-
-        level.color_map.recompute_maps()
-
-        braziers = filter(lambda x: level.terrain_map.get_tile_id(x) == 'brazier', level.terrain_map.all_points)
-
-        for point in braziers:
-            level.map_object_generator.add_brazier(point)
+    def initialize_color(cls, level):
+        level.color_map.compute_color_map()
 
     @classmethod
-    def create_door_objects(cls, level):
+    def create_doors(cls, level):
 
-        doors = filter(lambda x: level.terrain_map.get_tile_id(x) == 'door', level.terrain_map.all_points)
+        doors = level.terrain_map.get_all(DOOR_)
 
         for point in doors:
-            level.map_object_generator.add_door(point)
+
+            door = Door(level, point)
+            level.add_object(door)
 
     @classmethod
-    def initialize_fov(cls, level):
+    def create_crystals(cls, level):
 
-        level.fov_map = FOVMap(level)
-        level.fov_map.init_fov_map()
+        crystals = level.terrain_map.get_all(CRYSTAL_)
+        hues = [RED_HUE, GREEN_HUE, BLUE_HUE, CYAN_HUE, YELLOW_HUE, PURPLE_HUE, WHITE_HUE]
+
+        for point in crystals:
+
+            hue = choice(hues)
+
+            crystal = Crystal(level, point, hue)
+            level.add_object(crystal)
+
+        cls.initialize_color(level)
+
+    @classmethod
+    def create_braziers(cls, level):
+
+        braziers = level.terrain_map.get_all(BRAZIER_)
+
+        for point in braziers:
+
+            brazier = Brazier(level, point)
+            level.add_object(brazier)
+
+    @classmethod
+    def create_exit(cls, level):
+
+        exit_point = level.exit_stair
+
+        exit_obj = Exit(level, exit_point, level.depth+1)
+        level.add_object(exit_obj)
 
     @classmethod
     def spawn_monsters(cls, level, num):
@@ -91,13 +128,12 @@ class LevelGen(object):
         level.fov_map.recompute_fov(center=level.terrain_map.entrance)
         visible = level.fov_map.get_visible_points(level.terrain_map.entrance)
 
-        floor = set(filter(lambda x: level.terrain_map.get_tile(x) == 0, level.terrain_map.all_points))
+        floor = set(level.terrain_map.get_all(FLOOR_))
 
         spawn_locations = floor.difference(visible)  # all floor locations not in fov for player start
 
-        # TODO added weigthed algorithm to space monsters better later
+        # TODO added weighted algorithm to space monsters better later
         monster_points = sample(spawn_locations, num)
 
-        for point in monster_points:
-            level.map_object_generator.add_random_monster(point)
+        MonsterGenerator.get_instance().spawn_monsters(level, monster_points)
 

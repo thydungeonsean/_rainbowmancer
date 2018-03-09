@@ -20,7 +20,7 @@ class HueMap(_Map):
         for source in self.color_map.sources:
 
             if self.hue in hue_contains[source.hue]:
-                self.set_tile(source.coord, source.strength)
+                self.set_tile(source.coord.int_position, source.strength)
 
         self.spread_color()
 

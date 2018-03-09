@@ -5,7 +5,7 @@ from color_components.redraw_manager import RedrawManager
 
 class LevelMap(object):
 
-    def __init__(self, game_state, map_seed=None):
+    def __init__(self, game_state, depth, map_seed=None):
 
         self.game_state = game_state
 
@@ -14,6 +14,8 @@ class LevelMap(object):
         else:
             assert isinstance(map_seed, int)
             self.map_seed = map_seed
+
+        self.depth = depth
 
         self.terrain_map = None
         self.tile_map = None
@@ -27,6 +29,13 @@ class LevelMap(object):
 
         self.object_manager = ObjectManager(self)
 
+    def initialize(self, player):
+
+        self.add_player(player)
+        self.player.reposition(self.entrance)
+        self.fov_map.recompute_fov()
+        self.map_image.create_map_image()
+
     @property
     def w(self):
         return self.terrain_map.w
@@ -38,6 +47,10 @@ class LevelMap(object):
     @property
     def entrance(self):
         return self.terrain_map.entrance
+
+    @property
+    def exit_stair(self):
+        return self.terrain_map.exit_stair
 
     def run(self):
 
@@ -54,10 +67,15 @@ class LevelMap(object):
     def add_player(self, player):
 
         self.player = player
+        self.player.level_map = self
         self.object_manager.add_object(player)
 
-    def initialize(self, player):
+    def add_object(self, obj):
+        self.object_manager.add_object(obj)
 
-        self.add_player(player)
-        self.fov_map.recompute_fov()
-        self.map_image.create_map_image()
+    def add_color_source(self, src):
+        self.color_map.add_color_source(src)
+
+    def update_object_positions(self):
+
+        self.object_manager.update_positions()

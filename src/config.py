@@ -19,3 +19,5 @@ SCALE_TILE_H = scale(TILE_H)
 FPS = 60
 
 FULLSCREEN_ON = True
+
+DEVELOPER_MODE = True

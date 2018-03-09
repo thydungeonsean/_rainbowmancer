@@ -7,14 +7,14 @@ class RedrawManager(object):
         self.level = level
         self.redraw_tile_set = set()
 
-    def set_redraw_tiles(self, fov):
-        self.redraw_tile_set.update(fov)
+    def set_redraw_tiles(self, tiles):
+        self.redraw_tile_set.update(tiles)
 
     def run(self):
 
         if self.level.color_map.needs_recompute:
 
-            self.level.color_map.recompute_color_map()
+            self.level.color_map.compute_color_map()
             redrawn_tiles = self.level.color_map.get_differing_tiles()
             self.redraw_tile_set.update(redrawn_tiles)
 
@@ -29,6 +29,7 @@ class RedrawManager(object):
     def update_color_components(self, changed_tiles):
 
         for tile in changed_tiles:
-            # TODO if object manager says there is a reflector component or generator component there, update it
-            # self.level.object_manager
-            pass
+            touched_by_light = self.level.object_manager.get_objects_at_point(tile)
+            if touched_by_light:
+                map(lambda x: x.request_update(), touched_by_light)
+
