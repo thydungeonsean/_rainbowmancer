@@ -3,6 +3,7 @@ assets/oryx
 assets/assets.png
 *.png
 *.dll
+*.wav
 
 # project files
 .idea/

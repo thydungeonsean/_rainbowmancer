@@ -10,6 +10,7 @@ from components.dungeon_input_handler import DungeonInputHandler
 from components.player_controller import PlayerController
 
 from src.game_object.player import Player
+from src.sound.sounds import SoundArchive
 
 
 class GameState(AbstractState):
@@ -25,6 +26,9 @@ class GameState(AbstractState):
 
         self.player_controller = PlayerController(self)
         AbstractState.__init__(self, state_manager)
+
+        SoundArchive.set_instance(self)
+        self.sound_controller = SoundArchive.get_instance()
 
         self.frame = GameState.A
         self.tick = 0
@@ -79,6 +83,7 @@ class GameState(AbstractState):
 
         self.player_controller.run()
         self.level.run()
+        self.sound_controller.run()
 
     def tick_frame(self):
 

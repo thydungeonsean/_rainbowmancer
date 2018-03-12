@@ -1,5 +1,6 @@
 from game_object import GameObject
 from src.enum.tiles import DOOR_OPEN
+from src.sound.sounds import *
 
 
 class Door(GameObject):
@@ -24,6 +25,8 @@ class Door(GameObject):
         self.blocks = False
         self.blocks_sight = False
         self.level_map.fov_map.update_point(self.coord.int_position)
+
+        SoundArchive.get_instance().play_door()
 
         # TODO change tile of tile_map
         self.level_map.tile_map.update_tile(self.coord.int_position, DOOR_OPEN)
