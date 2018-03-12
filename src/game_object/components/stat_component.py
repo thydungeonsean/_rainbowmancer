@@ -1,6 +1,7 @@
 from game_object_component import GameObjectComponent
 from src.game_object.actor_stats import monster_archive
 from src.game_object.actor_stats import player_archive
+from src.sound.sounds import *
 
 
 class StatComponent(GameObjectComponent):
@@ -23,6 +24,8 @@ class StatComponent(GameObjectComponent):
         else:
             self.load_monster_stats()
 
+        self.stats['health'] = self.stats['max_health']
+
     def load_player_stats(self):
 
         for stat in player_archive.player_stats:
@@ -36,3 +39,23 @@ class StatComponent(GameObjectComponent):
     @property
     def image_id(self):
         return self.stats['image']
+
+    def attack(self, foe):
+
+        if not foe.dead:
+            dmg = self.stats['atk']
+            foe.stat_component.take_damage(dmg)
+
+    def take_damage(self, dmg):
+
+        self.stats['health'] -= dmg
+        if self.stats['health'] <= 0:
+            self.dead = True
+            # TODO death sound
+
+            self.owner.level_map.object_manager.request_update()
+
+        else:
+            SoundArchive.get_instance().play_sound('hit1')
+
+

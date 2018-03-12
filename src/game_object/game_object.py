@@ -17,8 +17,17 @@ class GameObject(object):
         self.stat_component = None
         self.color_source = None
 
+        self.team = 'NEUTRAL'
+
         self.blocks_sight = blocks_sight
         self.blocks = blocks
+
+    @property
+    def dead(self):
+        return False
+
+    def refresh(self):
+        pass
 
     def run(self):
 
@@ -48,7 +57,7 @@ class GameObject(object):
         vx, vy = self.view.coord.position
         return x - vx, y - vy
 
-    def on_bump(self):
+    def on_bump(self, bumper):
         # called when an actor bumps this game object
         pass
 

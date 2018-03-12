@@ -9,7 +9,8 @@ class Exit(GameObject):
 
         self.depth = depth
 
-    def on_bump(self):
+    def on_bump(self, bumper):
 
         print 'go down the dungeon!'
-        self.level_map.game_state.new_level(self.depth, self.level_map.map_seed+1)
+        if bumper.team == "PLAYER":
+            self.level_map.game_state.new_level(self.depth, self.level_map.map_seed+1)

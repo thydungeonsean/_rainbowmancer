@@ -8,6 +8,8 @@ from components.view_port import ViewPort
 from src.control.ui.ui import UI
 from components.dungeon_input_handler import DungeonInputHandler
 from components.player_controller import PlayerController
+from components.ai_controller import AIController
+from components.turn_tracker import TurnTracker
 
 from src.game_object.player import Player
 from src.sound.sounds import SoundArchive
@@ -25,6 +27,7 @@ class GameState(AbstractState):
     def __init__(self, state_manager):
 
         self.player_controller = PlayerController(self)
+        self.ai_controller = AIController(self)
         AbstractState.__init__(self, state_manager)
 
         SoundArchive.set_instance(self)
@@ -38,6 +41,7 @@ class GameState(AbstractState):
 
         self.view = None
         self.view_port = None
+        self.turn_tracker = TurnTracker(self)
 
         self.initialize()
 
@@ -54,6 +58,7 @@ class GameState(AbstractState):
 
         self.level.initialize(self.player)
         self.view.initialize()
+        self.turn_tracker.reset()
 
     def new_level(self, depth, map_seed):
 
@@ -81,7 +86,9 @@ class GameState(AbstractState):
 
         self.tick_frame()
 
+        self.turn_tracker.run()
         self.player_controller.run()
+        self.ai_controller.run()
         self.level.run()
         self.sound_controller.run()
 

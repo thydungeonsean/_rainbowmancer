@@ -13,3 +13,6 @@ class ColorSource(object):
 
     def move(self):
         self.color_map.request_recompute()
+
+    def kill(self):
+        self.color_map.remove_color_source(self)

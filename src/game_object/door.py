@@ -14,10 +14,11 @@ class Door(GameObject):
 
         self.state = Door.CLOSED
 
-    def on_bump(self):
+    def on_bump(self, bumper):
 
         if self.state == Door.CLOSED:
             self.open_door()
+            bumper.spend_turn()
 
     def open_door(self):
 
@@ -28,6 +29,6 @@ class Door(GameObject):
 
         SoundArchive.get_instance().play_door()
 
-        # TODO change tile of tile_map
+        # change tile of tile_map
         self.level_map.tile_map.update_tile(self.coord.int_position, DOOR_OPEN)
         self.level_map.fov_map.recompute_fov()

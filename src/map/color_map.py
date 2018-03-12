@@ -85,3 +85,9 @@ class ColorMap(SubMap):
             diff.update(hue_map.get_differing_tiles())
 
         return diff
+
+    def remove_color_source(self, src):
+
+        self.sources.remove(src)
+
+        self.request_recompute()

@@ -8,8 +8,17 @@ class ObjectManager(object):
         self.game_state = self.level.game_state
 
         self.objects = []
+        self.needs_update = False
+
+    def request_update(self):
+        self.needs_update = True
 
     def run(self):
+
+        if self.needs_update:
+            self.objects = list(filter(lambda x: not x.dead, self.objects))
+            self.needs_update = False
+
         for obj in self.objects:
             obj.run()
 
@@ -59,3 +68,11 @@ class ObjectManager(object):
     def get_objects_at_point(self, point):
 
         return filter(lambda x: x.coord.position == point, self.objects)
+
+    def refresh_turn_components(self):
+
+        map(lambda x: x.refresh(), self.objects)
+
+    def get_all(self, key):
+
+        return filter(lambda x: x.team == key, self.objects)

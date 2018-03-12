@@ -23,7 +23,7 @@ class Brazier(GameObject):
 
         # TODO check it's tile, if lit use the animated and add color_source etc.
 
-    def on_bump(self):
+    def on_bump(self, bumper):
 
         print 'bump brazier'
 
