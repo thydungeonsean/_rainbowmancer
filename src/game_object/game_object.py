@@ -13,6 +13,7 @@ class GameObject(object):
         self.coord = Vector(x, y)
 
         self.image_component = None
+        self.flash_component = None
         self.color_component = None
         self.stat_component = None
         self.color_source = None
@@ -24,6 +25,10 @@ class GameObject(object):
 
     @property
     def dead(self):
+        return False
+
+    @property
+    def critical(self):
         return False
 
     def refresh(self):

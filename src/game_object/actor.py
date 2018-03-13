@@ -34,6 +34,10 @@ class Actor(GameObject):
     def dead(self):
         return self.stat_component.dead
 
+    @property
+    def critical(self):
+        return self.stat_component.critical
+
     def try_move(self, vector):
 
         if self.can_move(vector):
@@ -81,7 +85,12 @@ class Actor(GameObject):
     def attack(self, foe):
 
         self.stat_component.attack(foe)
+        foe.flash()
         self.spend_turn()
+
+    def flash(self, num=1):
+        for i in range(num):
+            self.color_component.add_hit_flash()
 
     @property
     def ready(self):

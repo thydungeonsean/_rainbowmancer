@@ -29,6 +29,7 @@ class Crystal(GameObject):
 
         if bumper.team == "PLAYER":
             self.take_hit()
+            self.color_component.add_hit_flash()
             bumper.spend_turn()
         else:
             bumper.spend_turn()

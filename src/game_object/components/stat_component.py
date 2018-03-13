@@ -16,6 +16,10 @@ class StatComponent(GameObjectComponent):
 
         self.dead = False
 
+    @property
+    def critical(self):
+        return self.stats['health'] == 1 and self.stats['max_health'] != 1
+
     def load_stats(self):
 
         if self.stat_key in player_archive.players:

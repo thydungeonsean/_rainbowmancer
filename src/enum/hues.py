@@ -13,7 +13,7 @@ WHITE_HUE = 249
 
 
 # shade tables
-dark_shades = {0: UNSEEN,1: GREY_0}
+dark_shades = {0: UNSEEN, 1: GREY_0}
 
 red_shades = {1: RED_1, 2: RED_2, 3: RED_3, 4: RED_4, 5: RED_5}
 
@@ -54,3 +54,15 @@ hue_contains = {
 }
 
 max_str = 5
+
+opposed_hues = {
+    RED_HUE: {BLUE_HUE, CYAN_HUE},
+    GREEN_HUE: {RED_HUE, PURPLE_HUE},
+    BLUE_HUE: {GREEN_HUE, YELLOW_HUE},
+    YELLOW_HUE: {CYAN_HUE},
+    CYAN_HUE: {PURPLE_HUE},
+    PURPLE_HUE: {YELLOW_HUE},
+    WHITE_HUE: set()
+}
+
+red_hits = {GREEN_HUE, BLUE_HUE, YELLOW_HUE, CYAN_HUE, WHITE_HUE, DARK_HUE}
