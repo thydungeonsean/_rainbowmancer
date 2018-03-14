@@ -28,7 +28,6 @@ class Door(GameObject):
         self.level_map.fov_map.update_point(self.coord.int_position)
 
         SoundArchive.get_instance().play_door()
-        print 'here'
 
         # change tile of tile_map
         self.level_map.tile_map.update_tile(self.coord.int_position, DOOR_OPEN)

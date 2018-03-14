@@ -1,7 +1,7 @@
 
 BLANK = -1
 
-FLOOR = -1
+FLOOR = 0
 
 CAVE_WALL_VER = 1
 CAVE_WALL_HOR_1 = 2

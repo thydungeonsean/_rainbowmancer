@@ -7,38 +7,53 @@ class UI(StateComponent):
 
         StateComponent.__init__(self, state)
 
-        self.elements = []
-        self.key_element_dict = {}
+        self.elements = {}
+        self.controllers = []
+
+        self.needs_update = True
+
+    def run(self):
+        for element in self.elements.itervalues():
+            element.run()
+        if self.needs_update:
+            self.update_controllers()
 
     def draw(self, surface):
 
-        for element in self.elements:
-            element.draw(surface)
+        for element in self.elements.itervalues():
+            if element.parent is None:
+                element.draw(surface)
 
     # membership methods
     def add_element(self, element):
-        self.elements.append(element)
+        self.elements[element.element_id] = element
 
     def remove_element(self, element):
-        self.elements.remove(element)
+        del self.elements[element.element_id]
 
-    def add_key_element(self, element, key):
-        self.add_element(element)
-        self.key_element_dict[key] = element
+    def get_element(self, key):
+        return self.elements[key]
 
-    def get_key_element(self, key):
-        return self.key_element_dict[key]
-
-    def remove_key_element(self, key):
-        element = self.key_element_dict[key]
-        del self.key_element_dict[key]
-        self.remove_element(element)
+    def add_controller(self, controller):
+        self.controllers.append(controller)
 
     # handle clicking ui elements
     def click(self, pos):
-        for element in self.elements:
-            element.click(pos)
+        for element in self.elements.itervalues():
+            if element.parent is None:
+                element.click(pos)
 
     def right_click(self, pos):
-        for element in self.elements:
-            element.click(pos)
+        for element in self.elements.itervalues():
+            if element.parent is None:
+                element.click(pos)
+
+    def request_update(self):
+        self.needs_update = True
+
+    def update_controllers(self):
+
+        for controller in self.controllers:
+            controller.update()
+
+        self.needs_update = False

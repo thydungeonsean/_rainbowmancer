@@ -4,7 +4,7 @@ from src.enum.terrain import wall_terrains
 
 class FOVMap(object):
 
-    SIGHT_RADIUS = 6
+    SIGHT_RADIUS = 7
     LIGHT_WALLS = True
     ALGO = 4
 

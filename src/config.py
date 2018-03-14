@@ -13,6 +13,9 @@ SCALE_SCREEN_H = scale(SCREEN_H)
 TILE_W = 16
 TILE_H = 24
 
+ICON_W = 32
+ICON_H = 32
+
 SCALE_TILE_W = scale(TILE_W)
 SCALE_TILE_H = scale(TILE_H)
 

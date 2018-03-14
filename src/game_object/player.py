@@ -24,7 +24,18 @@ class Player(Actor):
         else:
             bumper.spend_turn()
 
-    def reposition(self, (x, y)):  # for when player moves to to new depth of dungeon
+    def position_on_level_map(self, (x, y)):  # for when player moves to to new depth of dungeon
         self.coord.set_position(x, y)
         self.set_position()
         # TODO if player has color source, add it to this map
+        self.start_turn()
+
+    def start_turn(self):
+        self.game_state.ability_manager.update_panel_color()
+
+    def spend_turn(self):
+        self.turn_component.take_turn()
+        self.level_map.game_state.ui.request_update()  # to update ability buttons
+
+        # TODO when players color component changes, update ability buttons
+        self.game_state.ability_manager.update_panel_color()

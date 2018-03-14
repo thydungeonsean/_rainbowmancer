@@ -1,9 +1,8 @@
 from game_object_component import GameObjectComponent
-from src.enum.colors import *
 from src.enum.hues import *
 
 
-class FlashComponent(GameObjectComponent):
+class GlowComponent(GameObjectComponent):
 
     CYCLE = 24
     HALF_CYCLE = CYCLE / 2
@@ -20,10 +19,10 @@ class FlashComponent(GameObjectComponent):
 
         self.tick += 1
 
-        if self.tick >= FlashComponent.CYCLE:
+        if self.tick >= GlowComponent.CYCLE:
             self.tick = 0
             self.pol = 1
-        elif self.tick == FlashComponent.HALF_CYCLE:
+        elif self.tick == GlowComponent.HALF_CYCLE:
             self.pol = -1
 
         if self.is_boosted or self.is_vulnerable or self.owner.critical:
@@ -68,22 +67,25 @@ class FlashComponent(GameObjectComponent):
             top = hue_table[self.color_map.get_tile(self.pos)][max_str]
         else:
             bot = PURE_BLACK
-            top = RED_2
+            top = GREY_3
         return self.interpolate_colors(bot, top, self.get_progress_percentage())
 
     def get_boost_flash(self):
-        bot = hue_table[self.color_component.hue_id][max_str]
+        if self.color_component.hue_id in strong_colors:
+            bot = hue_table[self.color_component.hue_id][max_str]
+        else:
+            bot = hue_table[self.color_component.hue_id][3]
         top = WHITE
         return self.interpolate_colors(bot, top, self.get_progress_percentage())
 
     def get_progress_percentage(self):
 
         if self.pol == 1:
-            return float(self.tick) / FlashComponent.HALF_CYCLE
+            return float(self.tick) / GlowComponent.HALF_CYCLE
         else:
-            diff = self.tick - FlashComponent.HALF_CYCLE
-            mod = FlashComponent.HALF_CYCLE - diff
-            return float(mod) / FlashComponent.HALF_CYCLE
+            diff = self.tick - GlowComponent.HALF_CYCLE
+            mod = GlowComponent.HALF_CYCLE - diff
+            return float(mod) / GlowComponent.HALF_CYCLE
 
     def interpolate_colors(self, (br, bg, bb), (tr, tg, tb), percent):
 

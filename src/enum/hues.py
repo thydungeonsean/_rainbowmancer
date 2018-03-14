@@ -15,19 +15,19 @@ WHITE_HUE = 249
 # shade tables
 dark_shades = {0: UNSEEN, 1: GREY_0}
 
-red_shades = {1: RED_1, 2: RED_2, 3: RED_3, 4: RED_4, 5: RED_5}
+red_shades = {0: RED_SUB, 1: RED_1, 2: RED_2, 3: RED_3, 4: RED_4, 5: RED_5}
 
-green_shades = {1: GREEN_1, 2: GREEN_2, 3: GREEN_3, 4: GREEN_4, 5: GREEN_5}
+green_shades = {0: GREEN_SUB,1: GREEN_1, 2: GREEN_2, 3: GREEN_3, 4: GREEN_4, 5: GREEN_5}
 
-blue_shades = {1: BLUE_1, 2: BLUE_2, 3: BLUE_3, 4: BLUE_4, 5: BLUE_5}
+blue_shades = {0: BLUE_SUB, 1: BLUE_1, 2: BLUE_2, 3: BLUE_3, 4: BLUE_4, 5: BLUE_5}
 
-yellow_shades = {1: YELLOW_1, 2: YELLOW_2, 3: YELLOW_3, 4: YELLOW_4, 5: YELLOW_5}
+yellow_shades = {0: YELLOW_SUB, 1: YELLOW_1, 2: YELLOW_2, 3: YELLOW_3, 4: YELLOW_4, 5: YELLOW_5}
 
-cyan_shades = {1: CYAN_1, 2: CYAN_2, 3: CYAN_3, 4: CYAN_4, 5: CYAN_5}
+cyan_shades = {0: CYAN_SUB, 1: CYAN_1, 2: CYAN_2, 3: CYAN_3, 4: CYAN_4, 5: CYAN_5}
 
-purple_shades = {1: PURPLE_1, 2: PURPLE_2, 3: PURPLE_3, 4: PURPLE_4, 5: PURPLE_5}
+purple_shades = {0: PURPLE_SUB, 1: PURPLE_1, 2: PURPLE_2, 3: PURPLE_3, 4: PURPLE_4, 5: PURPLE_5}
 
-white_shades = {1: GREY_1, 2: GREY_2, 3: GREY_3, 4: GREY_4, 5: GREY_5}
+white_shades = {0: GREY_0, 1: GREY_1, 2: GREY_2, 3: GREY_3, 4: GREY_4, 5: GREY_5}
 
 
 # hue range tables
@@ -66,3 +66,5 @@ opposed_hues = {
 }
 
 red_hits = {GREEN_HUE, BLUE_HUE, YELLOW_HUE, CYAN_HUE, WHITE_HUE, DARK_HUE}
+
+strong_colors = {RED_HUE, BLUE_HUE, PURPLE_HUE}

@@ -32,7 +32,7 @@ class LevelMap(object):
     def initialize(self, player):
 
         self.add_player(player)
-        self.player.reposition(self.entrance)
+        self.player.position_on_level_map(self.entrance)
         self.fov_map.recompute_fov()
         self.map_image.create_map_image()
 

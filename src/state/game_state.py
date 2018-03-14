@@ -5,11 +5,12 @@ from src.map.mapgen.level_gen import LevelGen
 # components
 from components.view import View
 from components.view_port import ViewPort
-from src.control.ui.ui import UI
+from src.control.ui.layout import Layout
 from components.dungeon_input_handler import DungeonInputHandler
 from components.player_controller import PlayerController
 from components.ai_controller import AIController
 from components.turn_tracker import TurnTracker
+from components.ability_manager import AbilityManager
 
 from src.game_object.player import Player
 from src.sound.sounds import SoundArchive
@@ -28,6 +29,7 @@ class GameState(AbstractState):
 
         self.player_controller = PlayerController(self)
         self.ai_controller = AIController(self)
+        self.ability_manager = AbilityManager(self)
         AbstractState.__init__(self, state_manager)
 
         SoundArchive.set_instance(self)
@@ -60,6 +62,8 @@ class GameState(AbstractState):
         self.view.initialize()
         self.turn_tracker.reset()
 
+        # TODO init ability manager and ability panel control here, now that player is loaded
+
     def new_level(self, depth, map_seed):
 
         self.level = LevelGen.generate_level(self, depth, map_seed)
@@ -70,7 +74,7 @@ class GameState(AbstractState):
         self.view.initialize()
 
     def initialize_ui(self):
-        return UI(self)
+        return Layout.create_game_ui(self)
 
     def initialize_input_handling(self):
         handler = DungeonInputHandler(self)
@@ -79,13 +83,15 @@ class GameState(AbstractState):
     def draw(self):
 
         self.level.draw(self.view_port)
-
         self.view_port.draw(self.screen)
+
+        self.ui.draw(self.screen)
 
     def run(self):
 
         self.tick_frame()
 
+        self.ui.run()
         self.turn_tracker.run()
         self.player_controller.run()
         self.ai_controller.run()

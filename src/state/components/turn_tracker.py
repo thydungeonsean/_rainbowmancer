@@ -35,6 +35,7 @@ class TurnTracker(StateComponent):
 
         # refresh turn components
         self.state.level.object_manager.refresh_turn_components()
+        self.state.level.player.start_turn()
 
     def run(self):
 

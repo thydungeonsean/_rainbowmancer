@@ -1,14 +1,18 @@
 from state_component import StateComponent
 from src.data_structures.vector import Vector
+from src.config import SCALE_TILE_W, SCALE_TILE_H
 
 
 class View(StateComponent):
 
-    VIEW_W = 27
+    VIEW_W = 29
     VIEW_H = 15
 
     OFFSET_X = VIEW_W / 2
     OFFSET_Y = VIEW_H / 2
+
+    view_w_px = VIEW_W * SCALE_TILE_W
+    view_h_px = VIEW_H * SCALE_TILE_H
 
     def __init__(self, state, start_pos=Vector(0, 0)):
 

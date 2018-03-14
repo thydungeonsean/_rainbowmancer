@@ -1,7 +1,7 @@
 from game_object_component import GameObjectComponent
 import src.enum.hues as hues
 from src.enum.hues import *
-from flash_component import FlashComponent
+from glow_component import GlowComponent
 from hit_flash import HitFlash
 
 
@@ -23,7 +23,7 @@ class ColorComponent(GameObjectComponent):
         self.hue_id = hue_id
         self.color_id = None
 
-        self.flash_component = FlashComponent(self.owner, self)
+        self.glow_component = GlowComponent(self.owner, self)
         self.hit_flashes = []
 
         self.update_function = {
@@ -42,9 +42,13 @@ class ColorComponent(GameObjectComponent):
     def is_generated(self):
         return self.mode == ColorComponent.GENERATE
 
+    @property
+    def pos(self):
+        return self.owner.coord.int_position
+
     def run(self):
 
-        self.flash_component.run()
+        self.glow_component.run()
 
         if self.hit_flashes:
             self.run_hit_flashes()
@@ -69,7 +73,7 @@ class ColorComponent(GameObjectComponent):
         if self.hit_flashes:
             self.color_id = self.hit_flashes[0].get_color()
         elif self.owner.critical:
-            self.color_id = self.flash_component.get_critical_flash()
+            self.color_id = self.glow_component.get_critical_flash()
         else:
             self.color_id = self.get_current_base_color()
         self.owner.image_component.change_color(self.color_id)
@@ -80,22 +84,21 @@ class ColorComponent(GameObjectComponent):
 
     def update_reflect(self):
 
-        pos = self.owner.coord.int_position
-        if self.color_map.get_tile(pos) == DARK_HUE:
+        if self.color_map.get_tile(self.pos) == DARK_HUE:
             color_id = GREY_2
-        elif self.color_map.get_tile(pos) == WHITE_HUE:
+        elif self.color_map.get_tile(self.pos) == WHITE_HUE:
             color_id = GREY_5
         else:
-            color_id = self.color_map.get_tile_color(pos)
+            color_id = self.color_map.get_tile_color(self.pos)
 
         return color_id
 
     def update_generate(self):
 
-        if self.flash_component.is_vulnerable:
-            color_id = self.flash_component.get_critical_flash()
-        elif self.flash_component.is_boosted:
-            color_id = self.flash_component.get_boost_flash()
+        if self.glow_component.is_vulnerable:
+            color_id = self.glow_component.get_critical_flash()
+        elif self.glow_component.is_boosted:
+            color_id = self.glow_component.get_boost_flash()
         else:
             color_id = hues.hue_table[self.hue_id][hues.max_str]
 
@@ -103,3 +106,14 @@ class ColorComponent(GameObjectComponent):
 
     def add_hit_flash(self):
         self.hit_flashes.append(HitFlash(self))
+
+    @property
+    def current_hue(self):
+
+        if self.is_generated:
+            return self.hue_id
+        else:
+            if self.color_map.get_tile(self.pos) in {DARK_HUE, WHITE_HUE}:
+                return WHITE_HUE
+            else:
+                return self.color_map.get_tile(self.pos)
