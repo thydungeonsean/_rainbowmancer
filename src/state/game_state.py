@@ -91,12 +91,12 @@ class GameState(AbstractState):
 
         self.tick_frame()
 
-        self.ui.run()
         self.turn_tracker.run()
         self.player_controller.run()
         self.ai_controller.run()
         self.level.run()
         self.sound_controller.run()
+        self.ui.run()
 
     def tick_frame(self):
 

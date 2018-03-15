@@ -16,6 +16,7 @@ class Player(Actor):
     def on_move(self):
         self.level_map.fov_map.recompute_fov()
         SoundArchive.get_instance().play_step()
+        self.spend_turn(free=True)
 
     def on_bump(self, bumper):
 
@@ -33,9 +34,10 @@ class Player(Actor):
     def start_turn(self):
         self.game_state.ability_manager.update_panel_color()
 
-    def spend_turn(self):
+    def spend_turn(self, free=False):
         self.turn_component.take_turn()
         self.level_map.game_state.ui.request_update()  # to update ability buttons
 
-        # TODO when players color component changes, update ability buttons
         self.game_state.ability_manager.update_panel_color()
+        # clear any crystals used for free - we didn't use them
+        self.level_map.game_state.ui.crystal_controller.reset_crystals(free=free)

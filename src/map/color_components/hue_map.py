@@ -24,6 +24,8 @@ class HueMap(_Map):
 
         self.spread_color()
 
+        self.apply_spot_sources()
+
     def copy_map(self):
 
         def copy_tile(self, (x, y)):
@@ -62,3 +64,9 @@ class HueMap(_Map):
                 diff.add((x, y))
 
         return diff
+
+    def apply_spot_sources(self):
+
+        for source in self.color_map.spot_sources:
+            if self.hue in hue_contains[source.hue]:
+                self.set_tile(source.coord, 5)

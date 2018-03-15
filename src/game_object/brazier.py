@@ -38,6 +38,6 @@ class Brazier(GameObject):
             self.state = Brazier.LIT
             self.image_component = ImageComponent(self, BRAZIER_LIT)
             self.color_component = ColorComponent(self, tile_hue, mode=REFLECT)
-            self.color_source = ColorSource(self.level_map, tile_hue, Brazier.STRENGTH, self.coord)
+            self.color_source = ColorSource(self.level_map.color_map, tile_hue, Brazier.STRENGTH, self.coord)
 
 

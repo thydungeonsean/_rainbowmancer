@@ -72,7 +72,6 @@ class AbilityPanelControl(PanelControl):
         return self.player.color_component.current_hue
 
     def click(self, key):
-
         if self.taking_input:
 
             if self.ability_map[key]:

@@ -42,7 +42,6 @@ class Actor(GameObject):
 
         if self.can_move(vector):
             self.move(vector)
-            self.spend_turn()
         else:
             self.bump(vector)
 
@@ -59,22 +58,15 @@ class Actor(GameObject):
         self.coord.add(vector)
         self.position(self.coord.position)
         self.on_move()
-        # TODO update turn component
 
     def on_move(self):
-        pass
+        self.spend_turn()
 
     def bump(self, vector):
 
         target_coord = self.coord.peek_add(vector)
         bumped_target = self.level_map.object_manager.get_objects_at_point(target_coord)
         map(lambda x: x.on_bump(self), bumped_target)
-
-        used_turn = True
-        if used_turn:
-            # TODO update turn component
-            pass
-        pass
 
     def spend_turn(self):
         self.turn_component.take_turn()

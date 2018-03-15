@@ -1,5 +1,4 @@
 from src.enum.abilities import *
-from ability import Ability
 from bolt import Bolt
 from bind import Bind
 from summon import Summon

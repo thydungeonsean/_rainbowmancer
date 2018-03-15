@@ -13,7 +13,7 @@ class Crystal(GameObject):
         GameObject.__init__(self, level_map, coord, False, True)
         self.image_component = ImageComponent(self, CRYSTAL)
         self.color_component = self.create_color_component(hue_id)
-        self.color_source = ColorSource(level_map, hue_id, 5, self.coord)
+        self.color_source = ColorSource(level_map.color_map, hue_id, 5, self.coord)
 
         self.health = 3
 

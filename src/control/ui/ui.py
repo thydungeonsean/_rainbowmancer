@@ -9,6 +9,8 @@ class UI(StateComponent):
 
         self.elements = {}
         self.controllers = []
+        self.crystal_controller = None
+        self.ability_controller = None
 
         self.needs_update = True
 
@@ -33,6 +35,14 @@ class UI(StateComponent):
 
     def get_element(self, key):
         return self.elements[key]
+
+    def add_crystal_controller(self, controller):
+        self.add_controller(controller)
+        self.crystal_controller = controller
+
+    def add_ability_controller(self, controller):
+        self.add_controller(controller)
+        self.ability_controller = controller
 
     def add_controller(self, controller):
         self.controllers.append(controller)

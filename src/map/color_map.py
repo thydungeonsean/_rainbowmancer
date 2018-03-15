@@ -16,6 +16,7 @@ class ColorMap(SubMap):
         }
 
         self.sources = []
+        self.spot_sources = []
         self.needs_recompute = True
 
     def get_tile_color(self, point):
@@ -74,6 +75,11 @@ class ColorMap(SubMap):
 
         self.request_recompute()
 
+    def add_spot_color_source(self, src):
+        src.color_map = self
+        self.spot_sources.append(src)
+        self.request_recompute()
+
     def request_recompute(self):
         self.needs_recompute = True
 
@@ -89,5 +95,9 @@ class ColorMap(SubMap):
     def remove_color_source(self, src):
 
         self.sources.remove(src)
+        self.request_recompute()
 
+    def remove_spot_color_source(self, src):
+
+        self.spot_sources.remove(src)
         self.request_recompute()

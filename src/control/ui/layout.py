@@ -31,8 +31,8 @@ class Layout(object):
         layout.create_crystal_panel(ui)
         layout.create_player_panel(ui)
 
-        ui.add_controller(AbilityPanelControl(ui))
-        ui.add_controller(CrystalPanelControl(ui))
+        ui.add_crystal_controller(CrystalPanelControl(ui))
+        ui.add_ability_controller(AbilityPanelControl(ui))
 
         return ui
 
