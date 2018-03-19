@@ -70,7 +70,6 @@ class ColorMap(SubMap):
     # color source managing
     def add_color_source(self, src):
 
-        src.color_map = self
         self.sources.append(src)
 
         self.request_recompute()

@@ -88,4 +88,5 @@ class Actor(GameObject):
     def ready(self):
         return self.turn_component.ready
 
-
+    def shatter(self):
+        self.stat_component.die()

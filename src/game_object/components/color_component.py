@@ -15,6 +15,16 @@ class ColorComponent(GameObjectComponent):
     REFLECT = REFLECT
     GENERATE = GENERATE
 
+    break_combos = {
+        RED_HUE: {BLUE_HUE, CYAN_HUE},
+        GREEN_HUE: {RED_HUE, PURPLE_HUE},
+        BLUE_HUE: {GREEN_HUE, YELLOW_HUE},
+        CYAN_HUE: {RED_HUE, PURPLE_HUE},
+        YELLOW_HUE: {BLUE_HUE, CYAN_HUE},
+        PURPLE_HUE: {GREEN_HUE, YELLOW_HUE},
+        WHITE_HUE: set(),
+    }
+
     def __init__(self, owner, hue_id=WHITE_HUE, mode=REFLECT):
 
         GameObjectComponent.__init__(self, owner)
@@ -85,7 +95,10 @@ class ColorComponent(GameObjectComponent):
     def update_reflect(self):
 
         if self.color_map.get_tile(self.pos) == DARK_HUE:
-            color_id = GREY_2
+            if self.owner.obj_id == 'door':
+                color_id = GREY_0
+            else:
+                color_id = GREY_2
         elif self.color_map.get_tile(self.pos) == WHITE_HUE:
             color_id = GREY_5
         else:
@@ -117,3 +130,14 @@ class ColorComponent(GameObjectComponent):
                 return WHITE_HUE
             else:
                 return self.color_map.get_tile(self.pos)
+
+    def bind_will_break_object(self, hue):
+
+        cls = ColorComponent
+        return self.mode == cls.GENERATE and hue in cls.break_combos[self.hue_id]
+
+    def bind(self, hue):
+
+        self.mode = ColorComponent.GENERATE
+        self.hue_id = hue
+        self.request_update()

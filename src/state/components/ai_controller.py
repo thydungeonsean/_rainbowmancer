@@ -15,13 +15,24 @@ class AIController(StateComponent):
 
         if self.state.turn_tracker.is_monster_turn:
 
-            monsters = self.object_manager.get_all('AI')
+            self.run_neutral_objects()
+            self.run_monsters()
 
-            monsters = sorted(monsters, key=self.distance_to_player)
+    def run_neutral_objects(self):
 
-            map(lambda x: x.take_turn(), monsters)
+        objects = self.object_manager.get_all('NEUTRAL')
 
-            self.state.turn_tracker.end_monster_turn()
+        map(lambda x: x.spend_turn(), objects)
+
+    def run_monsters(self):
+
+        monsters = self.object_manager.get_all('AI')
+
+        monsters = sorted(monsters, key=self.distance_to_player)
+
+        map(lambda x: x.take_turn(), monsters)
+
+        self.state.turn_tracker.end_monster_turn()
 
     def distance_to_player(self, obj):
 

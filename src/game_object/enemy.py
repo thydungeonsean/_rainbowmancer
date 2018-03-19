@@ -8,6 +8,7 @@ class Enemy(Actor):
 
         Actor.__init__(self, level_map, coord, actor_id)
         self.ai_component = self.load_ai_component()
+        self.obj_id = 'enemy'
 
     def load_ai_component(self):
         return AIComponent(self)

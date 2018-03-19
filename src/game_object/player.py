@@ -9,6 +9,7 @@ class Player(Actor):
     def __init__(self, level_map, player_id='test'):
         Actor.__init__(self, level_map, (0, 0), player_id)
         # self.color_source = ColorSource(level_map, BLUE_HUE, 3, self.coord)
+        self.obj_id = 'player'
 
     def set_team(self):
         return 'PLAYER'

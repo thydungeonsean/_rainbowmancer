@@ -1,4 +1,5 @@
 from src.state.components.state_component import StateComponent
+from battle_click_handler import BattleClickHandler
 
 
 class UI(StateComponent):
@@ -6,6 +7,8 @@ class UI(StateComponent):
     def __init__(self, state):
 
         StateComponent.__init__(self, state)
+
+        self.click_handler = BattleClickHandler(self)
 
         self.elements = {}
         self.controllers = []
@@ -49,11 +52,24 @@ class UI(StateComponent):
 
     # handle clicking ui elements
     def click(self, pos):
+
+        if self.click_handler.is_active(pos):
+            self.click_handler.click(pos)
+        else:
+            self.click_ui_elements(pos)
+
+    def click_ui_elements(self, pos):
+
         for element in self.elements.itervalues():
             if element.parent is None:
                 element.click(pos)
 
     def right_click(self, pos):
+
+        self.right_click_ui_elements(pos)
+
+    def right_click_ui_elements(self, pos):
+
         for element in self.elements.itervalues():
             if element.parent is None:
                 element.click(pos)

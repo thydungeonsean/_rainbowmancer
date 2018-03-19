@@ -17,11 +17,15 @@ class Brazier(GameObject):
 
         GameObject.__init__(self, level_map, coord, False, True)
 
-        self.state = None
-
+        self.obj_id = 'brazier'
         self.determine_initial_state()
+        self.is_dead = False
 
         # TODO check it's tile, if lit use the animated and add color_source etc.
+
+    @property
+    def dead(self):
+        return self.is_dead
 
     def on_bump(self, bumper):
 
@@ -40,4 +44,12 @@ class Brazier(GameObject):
             self.color_component = ColorComponent(self, tile_hue, mode=REFLECT)
             self.color_source = ColorSource(self.level_map.color_map, tile_hue, Brazier.STRENGTH, self.coord)
 
+    def shatter(self):
+        self.is_dead = True
+        self.level_map.object_manager.request_update()
 
+        self.level_map.shatter_terrain(self.coord.int_position)
+
+        # if lit, kill the color source
+        if self.state == Brazier.LIT:
+            self.color_source.kill()

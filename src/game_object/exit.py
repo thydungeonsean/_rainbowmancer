@@ -7,6 +7,7 @@ class Exit(GameObject):
 
         GameObject.__init__(self, level_map, coord, True, True)
 
+        self.obj_id = 'exit'
         self.depth = depth
 
     def on_bump(self, bumper):

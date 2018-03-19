@@ -8,6 +8,22 @@ class Ability(object):
         self.panel = manager.panel_control
         self.valid_points = set()
 
+    @property
+    def player(self):
+        return self.state.player
+
+    @property
+    def object_manager(self):
+        return self.state.level.object_manager
+
+    @property
+    def ability_hue(self):
+        return self.state.player.color_component.current_hue
+
+    @property
+    def color_map(self):
+        return self.state.level.color_map
+
     def set_active(self):
         self.compute_valid_points()
 
@@ -25,3 +41,13 @@ class Ability(object):
     def compute_valid_points(self):
 
         pass
+
+    def cast_ability(self, coord):
+
+        print 'zimpp'
+
+    def get_visible(self):
+
+        return self.state.level.fov_map.visible
+
+

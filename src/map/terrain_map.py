@@ -32,3 +32,15 @@ class TerrainMap(SubMap):
     def point_is_blocked(self, (x, y)):
 
         return self.get_tile((x, y)) in blocking_terrains
+
+    def point_is_floor(self, point):
+        return self.get_tile(point) == FLOOR_
+
+    def point_is_shatterable(self, point):
+        return not self.on_edge(point) and self.get_tile(point) in {STALAGTITE_, STONE_WALL_, WALL_}
+
+    def on_edge(self, (x, y)):
+        return x == 0 or x == self.w-1 or y == 0 or y == self.h-1
+
+    def point_is_bindable(self, point):
+        return self.get_tile(point) in {STALAGTITE_, STONE_WALL_, WALL_}

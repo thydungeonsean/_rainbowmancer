@@ -12,6 +12,8 @@ class GameObject(object):
 
         self.coord = Vector(x, y)
 
+        self.obj_id = None
+
         self.image_component = None
         self.flash_component = None
         self.color_component = None
@@ -35,7 +37,6 @@ class GameObject(object):
         pass
 
     def run(self):
-
         if self.color_component:
             self.color_component.run()
 
@@ -70,3 +71,29 @@ class GameObject(object):
 
         if self.color_component:
             self.color_component.request_update()
+
+    def spend_turn(self):
+        pass
+
+    def bind(self, hue):
+
+        shatter = False
+
+        if self.color_component:
+
+            if self.color_component.bind_will_break_object(hue):
+                shatter = True
+
+            self.color_component.bind(hue)
+            if self.color_source:
+                self.color_source.bind(hue)
+                # TODO binding brazier lights it
+
+            if shatter:
+                self.shatter()
+
+        else:
+            raise Exception('cannot bind object with no color component')
+
+    def shatter(self):
+        pass

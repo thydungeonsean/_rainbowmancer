@@ -4,13 +4,15 @@ from components.image_component import ImageComponent
 from src.map.color_components.color_source import ColorSource
 from src.enum.objects import CRYSTAL
 from src.sound.sounds import *
-
+from src.enum.tiles import STONE_2
 
 class Crystal(GameObject):
 
     def __init__(self, level_map, coord, hue_id):
 
         GameObject.__init__(self, level_map, coord, False, True)
+
+        self.obj_id = 'crystal'
         self.image_component = ImageComponent(self, CRYSTAL)
         self.color_component = self.create_color_component(hue_id)
         self.color_source = ColorSource(level_map.color_map, hue_id, 5, self.coord)
@@ -49,11 +51,11 @@ class Crystal(GameObject):
             self.shatter()
 
     def shatter(self):
-
+        self.health = 0
         self.level_map.object_manager.request_update()
         self.color_source.kill()
 
         # TODO
-        # change tile
+        self.level_map.shatter_terrain(self.coord.int_position)
         # boost player inventory
 

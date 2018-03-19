@@ -56,10 +56,11 @@ class StatComponent(GameObjectComponent):
         if self.stats['health'] <= 0:
             self.dead = True
             # TODO death sound
-
-            self.owner.level_map.object_manager.request_update()
+            self.die()
 
         else:
             SoundArchive.get_instance().play_sound('hit1')
 
-
+    def die(self):
+        self.dead = True
+        self.owner.level_map.object_manager.request_update()

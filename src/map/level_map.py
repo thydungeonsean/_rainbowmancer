@@ -1,6 +1,8 @@
 from random import randint
 from src.game_object.object_controllers.object_manager import ObjectManager
 from color_components.redraw_manager import RedrawManager
+from src.enum.tiles import STONE_2
+from src.enum.terrain import FLOOR_
 
 
 class LevelMap(object):
@@ -79,3 +81,10 @@ class LevelMap(object):
     def update_object_positions(self):
 
         self.object_manager.update_positions()
+
+    def shatter_terrain(self, coord):
+
+        self.tile_map.update_tile(coord, STONE_2)
+        self.terrain_map.set_tile(coord, FLOOR_)
+        self.fov_map.update_point(coord)
+        self.fov_map.recompute_fov()
